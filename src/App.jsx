@@ -1,3 +1,8 @@
+import { Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Member from "./components/Member";
+import Contact from "./components/Contact";
+
 function App() {
   return (
     <>
@@ -6,6 +11,12 @@ function App() {
           Tailwind Working now...
         </h2>
       </div>
+      <Header />
+      <Routes>
+        {/* <Route path="/" element={<App />} /> */}
+        <Route path="/member" element={<Member />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
     </>
   );
 }
