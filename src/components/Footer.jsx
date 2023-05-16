@@ -13,6 +13,14 @@ const Footer = () => {
           <Link to="/member" className="text-lg">
             Member
           </Link>
+          <a
+            className="text-white text-lg"
+            href="http://www.universityliving.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            UniversityLiving.Com
+          </a>
           <Link to="/contact" className="text-lg text-white">
             Developer &#8594;
           </Link>
