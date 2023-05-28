@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
-import Member from "./components/Member";
+import Member from "./pages/Member";
 import Contact from "./components/Contact";
-import Home from "./components/Home";
+import Home from "./pages/Home";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 
@@ -11,7 +11,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/member" element={<Member />} />
+        <Route path="/member/:id" element={<Member />} />
         {/* <Route path="/contact" element={<Contact />} /> */}
       </Routes>
       <Footer />
