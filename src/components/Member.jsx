@@ -4,7 +4,7 @@ const Member = () => {
   return (
     <>
       {/* main section */}
-      <section className="w-full h-auto mt-12">
+      <section className="w-full h-auto mt-20">
         {/* container */}
         <div className="max-lg:bg-slate-300 lg:mx-24 flex max-lg:flex-col justify-center items-center max-lg:py-10 m-4 rounded-xl shadow-xl">
           {/* image section */}
