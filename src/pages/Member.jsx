@@ -1,6 +1,12 @@
 import React from "react";
+import AddPlusUpdate from "../components/AddPlusUpdate";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import useDisclose from "../hooks/useDisclose";
 
 const Member = () => {
+  // modal hook with open and close funtionality
+  const { isOpen, onOpen, onClose } = useDisclose();
   return (
     <>
       {/* main section */}
@@ -36,12 +42,29 @@ const Member = () => {
               the people he loves most.
             </p>
             {/* edit button */}
-            <button className="bg-secondary hover:bg-primary transition-all text-white font-bold px-2 py-1 rounded-md max-lg:ml-6">
+            <button
+              onClick={onOpen}
+              className="bg-secondary hover:bg-primary transition-all text-white font-bold px-2 py-1 rounded-md max-lg:ml-6"
+            >
               Edit Details
             </button>
           </div>
         </div>
       </section>
+      {/* Modal Form Section Starts */}
+      <section className="relative">
+        <AddPlusUpdate
+          // isUpdate
+          // member={member}
+          isOpen={isOpen}
+          onClose={onClose}
+        />
+      </section>
+      {/* Modal Form Section Ends */}
+
+      {/* Toast Message Starts */}
+      <ToastContainer position="bottom-center" theme="dark" />
+      {/* Toast Message Ends */}
     </>
   );
 };

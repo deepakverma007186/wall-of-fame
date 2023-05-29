@@ -1,11 +1,25 @@
 import FounderCard from "../components/FounderCard";
+import LogoParticle from "../components/LogoParticle";
+import AddPlusUpdate from "../components/AddPlusUpdate";
 import MemberCard from "../components/MemberCard";
 import foundersData from "../helper/foundersData";
+import useDisclose from "../hooks/useDisclose";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { FcSearch } from "react-icons/fc";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Home = () => {
+  // modal hook with open and close funtionality
+  const { isOpen, onOpen, onClose } = useDisclose();
   return (
     <>
+      <div className="mt-20"></div>
+      {/* Hero Image Starts */}
+      <section className="md:w-[80%] md:h-[80vh] h-[20vh] mx-auto">
+        <LogoParticle />
+      </section>
+      {/* Hero Image Ends */}
       {/* Founders Section */}
       <div className="mt-20"></div>
       <section className="flex flex-col md:flex-row md:justify-evenly w-full mx-auto">
@@ -39,12 +53,22 @@ const Home = () => {
         </div>
         <div className="flex  justify-center">
           <AiFillPlusCircle
-            // onClick={onOpen}
+            onClick={onOpen}
             className="cursor-pointer  text-5xl text-secondary"
           />
         </div>
       </div>
       {/* Search Bar Ends */}
+
+      {/* Modal Form Section Starts */}
+      <section className="relative">
+        <AddPlusUpdate isOpen={isOpen} onClose={onClose} />
+      </section>
+      {/* Modal Form Section Ends */}
+
+      {/* Toast Message Starts */}
+      <ToastContainer position="bottom-center" theme="dark" />
+      {/* Toast Message Ends */}
 
       {/* Family Section Starts */}
       <div className="mt-12"></div>

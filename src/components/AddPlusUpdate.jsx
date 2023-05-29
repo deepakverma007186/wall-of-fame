@@ -1,40 +1,49 @@
 import React from "react";
 import Modal from "./Modal";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
-import { db } from "../config/firebase";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+// import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+// import { db } from "../config/firebase";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
+import { teamNames } from "../helper/teamNames";
 
 const memberSchemaValidation = Yup.object().shape({
-  name: Yup.string().required("Name Required"),
-  email: Yup.string().email("Invalid Email").required("Email Required"),
+  name: Yup.string().required("Name is required"),
+  teamName: Yup.string().required("Team Name is required"),
+  description: Yup.string().required("Description is required"),
+  imageUpload: Yup.mixed().required("Image is required"),
 });
 
 const AddPlusUpdate = ({ isOpen, onClose, isUpdate, member }) => {
   // add member to firebase
-  const addmember = async (_member) => {
-    try {
-      const memberRef = collection(db, "members");
-      await addDoc(memberRef, _member);
-      onClose();
-      toast.success("Added Successfully");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const addmember = async (_member) => {
+  //   try {
+  //     const memberRef = collection(db, "members");
+  //     await addDoc(memberRef, _member);
+  //     onClose();
+  //     toast.success("Added Successfully");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   // update member in firebase
-  const updatemember = async (_member, id) => {
-    try {
-      const memberRef = doc(db, "members", id);
-      await updateDoc(memberRef, _member);
-      onClose();
-      toast.success("member Updated");
-    } catch (error) {
-      console.log(error);
-    }
+  // const updatemember = async (_member, id) => {
+  //   try {
+  //     const memberRef = doc(db, "members", id);
+  //     await updateDoc(memberRef, _member);
+  //     onClose();
+  //     toast.success("member Updated");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const handleSubmit = (values) => {
+    // Handle form submission
+    console.log(values);
   };
+
   return (
     <div>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -44,47 +53,100 @@ const AddPlusUpdate = ({ isOpen, onClose, isUpdate, member }) => {
             isUpdate
               ? {
                   name: member.name,
-                  email: member.email,
+                  teamName: member.teamName,
+                  description: member.description,
+                  imageUpload: member.imgUrl,
                 }
               : {
                   name: "",
-                  email: "",
+                  teamName: "",
+                  description: "",
+                  imageUpload: null,
                 }
           }
-          onSubmit={(values) => {
-            isUpdate
-              ? updatemember(values, member.id)
-              : addmember({ name: values.name, email: values.email });
-          }}
+          onSubmit={handleSubmit}
         >
-          <Form className="flex flex-col gap-4 p-4">
-            <div className="flex flex-col gap-2">
-              <label htmlFor="name">Name</label>
+          <Form className="flex flex-col gap-4 justify-start p-2 text-white">
+            <div className="flex flex-col">
+              <label htmlFor="name" className="text-white">
+                Name:
+              </label>
               <Field
                 type="text"
+                id="name"
                 name="name"
-                className="h-10 rounded-md border bg-base p-2 text-primary outline-none"
+                className="bg-gray-800 border border-white rounded-lg px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"
               />
-              <div className="text-xs text-red-500">
-                <ErrorMessage name="name" />
-              </div>
+              <ErrorMessage
+                name="name"
+                component="div"
+                className="text-red-500"
+              />
             </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="email">Email</label>
+
+            <div className="flex flex-col">
+              <label htmlFor="teamName" className="text-white">
+                Team Name:
+              </label>
               <Field
-                type="email"
-                name="email"
-                className="h-10 rounded-md border bg-base p-2 text-primary outline-none"
+                as="select"
+                id="teamName"
+                name="teamName"
+                className="bg-gray-800 border border-white rounded-lg px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"
+              >
+                <option value="">Select a team</option>
+                {teamNames.map((teamName) => (
+                  <option key={teamName} value={teamName}>
+                    {teamName}
+                  </option>
+                ))}
+              </Field>
+              <ErrorMessage
+                name="teamName"
+                component="div"
+                className="text-red-500"
               />
-              <div className="text-xs text-red-500">
-                <ErrorMessage name="email" />
-              </div>
             </div>
+
+            <div className="flex flex-col">
+              <label htmlFor="description" className="text-white">
+                Description:
+              </label>
+              <Field
+                as="textarea"
+                id="description"
+                name="description"
+                className="bg-gray-800 border border-white rounded-lg px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"
+              />
+              <ErrorMessage
+                name="description"
+                component="div"
+                className="text-red-500"
+              />
+            </div>
+
+            <div className="flex flex-col md:flex-row md:items-center md:gap-4">
+              <label htmlFor="imageUpload" className="text-white">
+                Image:
+              </label>
+              <Field
+                type="file"
+                id="imageUpload"
+                name="imageUpload"
+                className="bg-gray-800 border border-white rounded-lg px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"
+              />
+              <ErrorMessage
+                name="imageUpload"
+                component="div"
+                className="text-red-500"
+              />
+            </div>
+
             <button
               type="submit"
-              className="self-end rounded-lg bg-dark px-3 py-2 text-primary"
+              className="self-end rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:opacity-90 text-white px-5 py-3 font-medium"
             >
-              {isUpdate ? "Update" : "Add"} member
+              {isUpdate ? "Update" : "Add"} Member
             </button>
           </Form>
         </Formik>

@@ -1,0 +1,16 @@
+export const teamNames = [
+  "Catalog",
+  "Technology",
+  "Digital Marketing",
+  "Administration",
+  "Sales Support",
+  "Inside Sales",
+  "Business Development",
+  "Supply",
+  "Human Resource",
+  "Partnerships",
+  "Finance",
+  "Founder's Office",
+  "Management",
+  "Unassigned",
+];
