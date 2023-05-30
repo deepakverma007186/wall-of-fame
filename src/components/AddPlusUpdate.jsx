@@ -1,8 +1,8 @@
 import React from "react";
 import Modal from "./Modal";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-// import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
-// import { db } from "../config/firebase";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import { db } from "../config/firebase";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { teamNames } from "../helper/teamNames";
@@ -11,37 +11,33 @@ const memberSchemaValidation = Yup.object().shape({
   name: Yup.string().required("Name is required"),
   teamName: Yup.string().required("Team Name is required"),
   description: Yup.string().required("Description is required"),
-  imageUpload: Yup.mixed().required("Image is required"),
+  // imageUpload: Yup.mixed().required("Image is required"),
 });
 
 const AddPlusUpdate = ({ isOpen, onClose, isUpdate, member }) => {
   // add member to firebase
-  // const addmember = async (_member) => {
-  //   try {
-  //     const memberRef = collection(db, "members");
-  //     await addDoc(memberRef, _member);
-  //     onClose();
-  //     toast.success("Added Successfully");
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const addMember = async (_member) => {
+    try {
+      const memberRef = collection(db, "members");
+      await addDoc(memberRef, _member);
+      onClose();
+      toast.success("Added Successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // update member in firebase
-  // const updatemember = async (_member, id) => {
-  //   try {
-  //     const memberRef = doc(db, "members", id);
-  //     await updateDoc(memberRef, _member);
-  //     onClose();
-  //     toast.success("member Updated");
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  const handleSubmit = (values) => {
-    // Handle form submission
-    console.log(values);
+  const updateMember = async (_member, id) => {
+    try {
+      console.log(_member);
+      const memberRef = doc(db, "members", id);
+      await updateDoc(memberRef, _member);
+      onClose();
+      toast.success("Member Details Updated");
+    } catch (error) {
+      console.log(error + "kya hai ye?");
+    }
   };
 
   return (
@@ -55,16 +51,22 @@ const AddPlusUpdate = ({ isOpen, onClose, isUpdate, member }) => {
                   name: member.name,
                   teamName: member.teamName,
                   description: member.description,
-                  imageUpload: member.imgUrl,
                 }
               : {
                   name: "",
                   teamName: "",
                   description: "",
-                  imageUpload: null,
                 }
           }
-          onSubmit={handleSubmit}
+          onSubmit={(values) => {
+            isUpdate
+              ? updateMember(values, member.id)
+              : addMember({
+                  name: values.name,
+                  teamName: values.teamName,
+                  description: values.description,
+                });
+          }}
         >
           <Form className="flex flex-col gap-4 justify-start p-2 text-white">
             <div className="flex flex-col">
@@ -125,7 +127,7 @@ const AddPlusUpdate = ({ isOpen, onClose, isUpdate, member }) => {
               />
             </div>
 
-            <div className="flex flex-col md:flex-row md:items-center md:gap-4">
+            {/* <div className="flex flex-col md:flex-row md:items-center md:gap-4">
               <label htmlFor="imageUpload" className="text-white">
                 Image:
               </label>
@@ -140,11 +142,17 @@ const AddPlusUpdate = ({ isOpen, onClose, isUpdate, member }) => {
                 component="div"
                 className="text-red-500"
               />
+            </div> */}
+            <div className="flex flex-col">
+              <label htmlFor="note" className="text-white">
+                Note:
+              </label>
+              <p>Profile image is random using third-party API.</p>
             </div>
 
             <button
               type="submit"
-              className="self-end rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:opacity-90 text-white px-5 py-3 font-medium"
+              className="self-end rounded-lg bg-gradient-to-r from-primary to-indigo-600 hover:opacity-90 text-white px-5 py-3 font-medium"
             >
               {isUpdate ? "Update" : "Add"} Member
             </button>

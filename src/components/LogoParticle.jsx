@@ -1,5 +1,5 @@
 import { imgSvg } from "../helper/imgSvg";
-import "../helper/particlePhysics";
+// import "../helper/particlePhysics";
 
 const LogoParticle = () => {
   return (

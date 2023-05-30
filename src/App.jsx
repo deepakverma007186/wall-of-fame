@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import Member from "./pages/Member";
-import Contact from "./components/Contact";
 import Home from "./pages/Home";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
@@ -12,7 +11,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/member/:id" element={<Member />} />
-        {/* <Route path="/contact" element={<Contact />} /> */}
       </Routes>
       <Footer />
     </>

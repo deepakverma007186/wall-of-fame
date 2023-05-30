@@ -1,17 +1,64 @@
+import { useState, useEffect } from "react";
 import FounderCard from "../components/FounderCard";
 import LogoParticle from "../components/LogoParticle";
 import AddPlusUpdate from "../components/AddPlusUpdate";
 import MemberCard from "../components/MemberCard";
 import foundersData from "../helper/foundersData";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../config/firebase";
 import useDisclose from "../hooks/useDisclose";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { FcSearch } from "react-icons/fc";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NoMembers from "../components/NoMembers";
 
 const Home = () => {
   // modal hook with open and close funtionality
   const { isOpen, onOpen, onClose } = useDisclose();
+
+  // Fetch contacts from Firebase
+  const [members, setMembers] = useState([]);
+  useEffect(() => {
+    const getMembers = async () => {
+      try {
+        const membersRef = collection(db, "members");
+        onSnapshot(membersRef, (snapshot) => {
+          const memberLists = snapshot.docs.map((doc) => {
+            return {
+              id: doc.id,
+              ...doc.data(),
+            };
+          });
+          setMembers(memberLists);
+          return memberLists;
+        });
+      } catch (error) {
+        console.log("Error: " + error);
+      }
+    };
+    getMembers();
+  }, []);
+
+  // search contacts
+  const filterMembers = (e) => {
+    const value = e.target.value;
+    const membersRef = collection(db, "members");
+    onSnapshot(membersRef, (snapshot) => {
+      const memberLists = snapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      const filteredMembers = memberLists.filter((member) =>
+        member.name.toLowerCase().includes(value.toLowerCase())
+      );
+      setMembers(filteredMembers);
+      return filteredMembers;
+    });
+  };
+
   return (
     <>
       <div className="mt-20"></div>
@@ -46,7 +93,7 @@ const Home = () => {
           <FcSearch className="absolute pl-2 text-4xl text-primary" />
           <input
             type="text"
-            // onChange={filterContacts}
+            onChange={filterMembers}
             placeholder="Search by name..."
             className="border-1 w-[60%] flex-grow rounded-md border bg-dark p-2 pl-10 text-xl text-primary outline-none"
           />
@@ -60,6 +107,24 @@ const Home = () => {
       </div>
       {/* Search Bar Ends */}
 
+      {/* Family Section Starts */}
+      <div className="mt-12"></div>
+      {members.length <= 0 ? (
+        <>
+          <section className="grid place-content-center w-[80%] mx-auto">
+            <NoMembers />
+          </section>
+        </>
+      ) : (
+        <section className="grid gap-6 md:gap-8 md:grid-cols-3 grid-cols-1 w-[80%] mx-auto">
+          {members.map((member) => (
+            <MemberCard key={member.id} member={member} />
+          ))}
+        </section>
+      )}
+      {/* Family Section Ends */}
+      <div className="mt-20"></div>
+
       {/* Modal Form Section Starts */}
       <section className="relative">
         <AddPlusUpdate isOpen={isOpen} onClose={onClose} />
@@ -67,32 +132,8 @@ const Home = () => {
       {/* Modal Form Section Ends */}
 
       {/* Toast Message Starts */}
-      <ToastContainer position="bottom-center" theme="dark" />
+      <ToastContainer position="bottom-center" />
       {/* Toast Message Ends */}
-
-      {/* Family Section Starts */}
-      <div className="mt-12"></div>
-      <section className="grid gap-6 md:gap-8 md:grid-cols-3 grid-cols-1 w-[80%] mx-auto">
-        <MemberCard />
-        <MemberCard />
-        <MemberCard />
-        <MemberCard />
-        <MemberCard />
-        <MemberCard />
-        <MemberCard />
-        <MemberCard />
-        <MemberCard />
-        <MemberCard />
-        <MemberCard />
-        <MemberCard />
-        <MemberCard />
-        <MemberCard />
-        <MemberCard />
-        <MemberCard />
-        <MemberCard />
-        <MemberCard />
-      </section>
-      {/* Family Section Ends */}
     </>
   );
 };
