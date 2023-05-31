@@ -34,7 +34,7 @@ const AddPlusUpdate = ({ isOpen, onClose, isUpdate, member }) => {
   // update member in firebase
   const updateMember = async (_member, id) => {
     try {
-      console.log(_member);
+      console.log(_member, id);
       const memberRef = doc(db, "members", id);
       await updateDoc(memberRef, _member);
       onClose();

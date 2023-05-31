@@ -8,7 +8,7 @@ const NoMembers = () => {
           className="w-[30px] object-contain"
         />
 
-        <h3 className="text-xl w-full text-primary">Loading...</h3>
+        <h3 className="text-xl w-full text-primary">Is anyone here?</h3>
       </div>
     </>
   );

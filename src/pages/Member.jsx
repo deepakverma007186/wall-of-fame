@@ -80,18 +80,19 @@ const Member = () => {
               {/* {member.description} */}
             </p>
             {/* edit button */}
-            <button
+            {/* <button
               onClick={onOpen}
               className="md:absolute md:top-[32rem] md:right-4 md:py-2 md:px-3 bg-secondary hover:bg-primary transition-all text-white font-bold px-2 py-1 rounded-md max-md:ml-6"
             >
               Edit Details
             </button>
+
             <button
-              // onClick={deleteMember}
+              onClick={() => deleteMember(member.id)}
               className="md:absolute md:top-[37rem] md:right-4 md:py-1 md:px-3 hover:bg-red-400 transition-all text-white font-bold px-2 py-1 rounded-md max-md:ml-6"
             >
               Remove
-            </button>
+            </button> */}
           </div>
         </div>
       </section>

@@ -63,13 +63,21 @@ const Home = () => {
     <>
       <div className="mt-20"></div>
       {/* Hero Image Starts */}
-      <section className="md:w-[80%] md:h-[80vh] h-[20vh] mx-auto">
+      <section className="hidden lg:block md:w-[80%] md:h-[80vh] h-[20vh] mx-auto">
+        <iframe
+          src="https://image-particle.deepakgsbv7186.repl.co"
+          frameBorder="0"
+          scrolling="no"
+          style={{ width: "100%", height: "100%" }}
+        ></iframe>
+      </section>
+      <section className="lg:hidden md:w-[80%] md:h-[80vh] h-[20vh] mx-auto">
         <LogoParticle />
       </section>
       {/* Hero Image Ends */}
       {/* Founders Section */}
       <div className="mt-20"></div>
-      <section className="flex flex-col md:flex-row md:justify-evenly w-full mx-auto">
+      <section className="flex flex-col md:flex-row md:justify-evenly md:w-full w-[300px] mx-auto">
         {foundersData.map((founder) => (
           <FounderCard
             key={founder.id}

@@ -4,7 +4,7 @@ const FounderCard = ({ name, profile, pic }) => {
   return (
     <>
       <div className="flex flex-col items-center m-4">
-        <div className="bg-gray-300 rounded-full w-[350px] h-full flex justify-center overflow-hidden pt-4">
+        <div className="bg-gray-300 rounded-full md:w-[350px] w-[250px] h-full flex justify-center overflow-hidden pt-4">
           <img src={pic} alt={name} />
         </div>
         <div>
