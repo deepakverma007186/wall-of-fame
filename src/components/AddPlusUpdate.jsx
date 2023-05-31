@@ -8,9 +8,13 @@ import * as Yup from "yup";
 import { teamNames } from "../helper/teamNames";
 
 const memberSchemaValidation = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
+  name: Yup.string().min(2).max(25).required("Name is required"),
   teamName: Yup.string().required("Team Name is required"),
-  description: Yup.string().required("Description is required"),
+  description: Yup.string()
+    .min(20)
+    .max(800)
+    .required("Description is required"),
+  nickName: Yup.string().min(10).max(50).required("Required"),
   // imageUpload: Yup.mixed().required("Image is required"),
 });
 
@@ -40,6 +44,9 @@ const AddPlusUpdate = ({ isOpen, onClose, isUpdate, member }) => {
     }
   };
 
+  // const handleSubmit = (value) => {
+  //   console.log(value);
+  // };
   return (
     <div>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -51,13 +58,16 @@ const AddPlusUpdate = ({ isOpen, onClose, isUpdate, member }) => {
                   name: member.name,
                   teamName: member.teamName,
                   description: member.description,
+                  nickName: member.nickName,
                 }
               : {
                   name: "",
                   teamName: "",
                   description: "",
+                  nickName: "",
                 }
           }
+          // onSubmit={handleSubmit}
           onSubmit={(values) => {
             isUpdate
               ? updateMember(values, member.id)
@@ -65,10 +75,11 @@ const AddPlusUpdate = ({ isOpen, onClose, isUpdate, member }) => {
                   name: values.name,
                   teamName: values.teamName,
                   description: values.description,
+                  nickName: values.nickName,
                 });
           }}
         >
-          <Form className="flex flex-col gap-4 justify-start p-2 text-white">
+          <Form className="flex flex-col gap-4 justify-start p-2 md:w-[500px] text-white">
             <div className="flex flex-col">
               <label htmlFor="name" className="text-white">
                 Name:
@@ -144,10 +155,20 @@ const AddPlusUpdate = ({ isOpen, onClose, isUpdate, member }) => {
               />
             </div> */}
             <div className="flex flex-col">
-              <label htmlFor="note" className="text-white">
-                Note:
+              <label htmlFor="nickName" className="text-white">
+                Remember As:
               </label>
-              <p>Profile image is random using third-party API.</p>
+              <Field
+                type="text"
+                id="nickName"
+                name="nickName"
+                className="bg-gray-800 border border-white rounded-lg px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"
+              />
+              <ErrorMessage
+                name="nickName"
+                component="div"
+                className="text-red-500"
+              />
             </div>
 
             <button

@@ -38,43 +38,46 @@ const Member = () => {
       console.log(error);
     }
   };
+  const str = member.description;
+  function trancateDesc(str, n) {
+    return str?.length > n ? str.substr(0, n - 1) + "..." : str;
+  }
 
   return (
     <>
       {/* main section */}
       <section className="w-full h-auto mt-20">
         {/* container */}
-        <div className=" max-md:bg-slate-300 md:mx-24 flex max-md:flex-col justify-center items-center max-md:py-10 m-4 rounded-xl shadow-xl">
+        <div className="md:mx-24 flex max-md:flex-col justify-center items-center max-md:py-10 m-4 rounded-xl shadow-xl">
           {/* image section */}
-          <div className="flex-1 max-md:flex w-full justify-center items-center">
-            <img
+          <div className="flex-1 max-md:flex w-full justify-center items-center ">
+            {/* <img
               src="https://rare-gallery.com/uploads/posts/1208374-Spider-Man-Miles-Morales-artwork-movies-Spider-Man-Into-the-Spider-Verse.jpg"
               alt="miles"
               className="w-[320px] md:w-[600px] md:h-[600px] object-cover max-md:rounded-3xl md:rounded-l-xl shadow-2xl"
-            />
+            /> */}
+            <div className="flex justify-center items-center min-h-[60vh] w-full bg-gradient-to-l from-purple-500 to-secondary md:rounded-r-full rounded-[6rem]">
+              <div className="text-center">
+                <h2 className="text-5xl font-bold text-white md:p-2">
+                  {member.nickName}
+                </h2>
+              </div>
+            </div>
           </div>
           {/* description section */}
           <div className="md:relative flex-1 max-md:pt-10 md:ml-10 space-y-4 md:h-[80vh] w-full items-center">
-            {/* <div className=""> */}
             {/* member name */}
-            <h2 className="md:absolute md:top-10 md:right-0 md:w-[80%] bg-secondary text-white font-bold text-center text-2xl leading-0 p-4 md:rounded-l-2xl">
+            <h2 className="md:absolute md:top-4 md:right-0 md:w-[80%] bg-secondary text-white font-bold text-center text-2xl leading-0 p-4 rounded-2xl md:rounded-l-2xl">
               {member.name}
             </h2>
             {/* member designation */}
-            <h3 className="md:absolute md:top-24 md:right-0 md:w-[70%] bg-primary p-2 text-center text-white font-semibold md:rounded-l-2xl">
+            <h3 className="md:absolute md:top-20 md:right-0 md:w-[70%] bg-primary p-2 text-center text-white font-semibold rounded-2xl md:rounded-l-2xl">
               {member.teamName}
             </h3>
-            {/* </div> */}
             {/* member description */}
-            <p className="text-lg text-justify md:p-4 p-2 md:absolute md:top-40 my-4 max-md:p-6 md:h-[45vh] md:w-full">
-              {/* After reuniting with Gwen Stacy, Brooklyn's full-time, friendly
-              neighborhood Spider-Man is catapulted across the Multiverse, where
-              he encounters a team of Spider-People charged with protecting its
-              very existence. However, when the heroes clash on how to handle a
-              new threat, Miles finds himself pitted against the other Spiders.
-              He must soon redefine what it means to be a hero so he can save
-              the people he loves most. */}
-              {member.description}
+            <p className="bg-clip-text bg-gradient-to-t from-purple-400 to-white text-slate-700 text-lg text-justify md:p-4 p-2 md:absolute md:top-32 my-4 max-md:p-6 min-h-[50vh] md:w-full">
+              {trancateDesc(str, 800)}
+              {/* {member.description} */}
             </p>
             {/* edit button */}
             <button
@@ -84,7 +87,7 @@ const Member = () => {
               Edit Details
             </button>
             <button
-              onClick={deleteMember}
+              // onClick={deleteMember}
               className="md:absolute md:top-[37rem] md:right-4 md:py-1 md:px-3 hover:bg-red-400 transition-all text-white font-bold px-2 py-1 rounded-md max-md:ml-6"
             >
               Remove
