@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const githubURL = import.meta.env.VITE_GITHUB_URL;
   return (
     <>
       <div className="fixed top-0 w-full flex justify-between p-2.5 max-h-[100px] z-10 navColor">
@@ -12,11 +13,7 @@ const Navbar = () => {
             alt="ul_logo"
           />
         </Link>
-        <a
-          href="https://github.com/deepakgsbv7186/wall-of-fame"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href={githubURL} target="_blank" rel="noopener noreferrer">
           <svg
             height="32"
             aria-hidden="true"

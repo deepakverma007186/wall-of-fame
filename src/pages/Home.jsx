@@ -16,6 +16,7 @@ import NoMembers from "../components/NoMembers";
 const Home = () => {
   // modal hook with open and close funtionality
   const { isOpen, onOpen, onClose } = useDisclose();
+  const logoURL = import.meta.env.VITE_LOGO_URL;
 
   // Fetch contacts from Firebase
   const [members, setMembers] = useState([]);
@@ -65,7 +66,7 @@ const Home = () => {
       {/* Hero Image Starts */}
       <section className="hidden lg:block md:w-[80%] md:h-[80vh] h-[20vh] mx-auto">
         <iframe
-          src="https://image-particle.deepakgsbv7186.repl.co"
+          src={logoURL}
           frameBorder="0"
           scrolling="no"
           style={{ width: "100%", height: "100%" }}

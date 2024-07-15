@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
+  const portfolioURL = import.meta.env.VITE_PORTFOLIO_URL;
   return (
     <>
       <div className="mt-12"></div>
@@ -23,7 +24,7 @@ const Footer = () => {
           </a>
           <Link
             target="_blank"
-            to="https://deepakgsbv7186-portfolio.netlify.app/"
+            to={portfolioURL}
             className="text-lg text-white"
           >
             Developer &#8594;
