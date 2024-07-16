@@ -2,7 +2,7 @@
 
 Re-Live The Memories
 
-Day 1: Task List
+Task List
 
 - initial setup
 - configure tailwind
@@ -11,3 +11,5 @@ Day 1: Task List
   - axios
 - created component 'Member' page
   - detailed view of member
+- add particle logo
+- firebase CRUD operations
